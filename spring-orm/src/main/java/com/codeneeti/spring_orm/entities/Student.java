@@ -10,13 +10,24 @@ public class Student {
     private String studentName;
     private String about;
 
+//    @Override
+//    public String toString() {
+//        return "Student{" +
+//                "studentId=" + studentId +
+//                ", studentName='" + studentName + '\'' +
+//                ", about='" + about + '\'' +
+//                ", laptop=" + laptop +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Student{" +
                 "studentId=" + studentId +
                 ", studentName='" + studentName + '\'' +
                 ", about='" + about + '\'' +
-                ", laptop=" + laptop +
+                // Avoid recursive call to Laptop.toString()
+                ", laptopId=" + (laptop != null ? laptop.getLaptopId() : "null") +
                 '}';
     }
 
@@ -51,7 +62,8 @@ public class Student {
     public void setLaptop(Laptop laptop) {
         this.laptop = laptop;
     }
-    public Student(){
+
+    public Student() {
 
     }
 
@@ -68,6 +80,6 @@ public class Student {
 //    @OneToOne(mappedBy = "student")
 //    private Laptop laptop;
 
-    @OneToOne(mappedBy = "student",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Laptop laptop;
 }

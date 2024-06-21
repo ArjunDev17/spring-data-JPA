@@ -16,13 +16,24 @@ public class Laptop {
 
     }
 
+//    @Override
+//    public String toString() {
+//        return "Laptop{" +
+//                "laptopId=" + laptopId +
+//                ", modelNumber='" + modelNumber + '\'' +
+//                ", brand='" + brand + '\'' +
+//                ", student=" + student +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Laptop{" +
                 "laptopId=" + laptopId +
                 ", modelNumber='" + modelNumber + '\'' +
                 ", brand='" + brand + '\'' +
-                ", student=" + student +
+                // Avoid recursive call to Student.toString()
+                ", studentId=" + (student != null ? student.getStudentId() : "null") +
                 '}';
     }
 

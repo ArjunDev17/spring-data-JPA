@@ -12,48 +12,49 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Optional;
+
 @SpringBootApplication
 public class SpringOrmApplication implements CommandLineRunner {
-	Logger logger=LoggerFactory.getLogger(SpringOrmApplication.class);
+    Logger logger = LoggerFactory.getLogger(SpringOrmApplication.class);
 
-	@Autowired
-	private StudentRepository studentRepository;
-	@Autowired
-	private UserService userService;
-	public static void main(String[] args) {
-		System.out.println("Running MyRunner...");
-		SpringApplication.run(SpringOrmApplication.class, args);
-	}
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private UserService userService;
 
-	@Override
-	public void run(String... args) throws Exception {
+    public static void main(String[] args) {
+        System.out.println("Running MyRunner...");
+        SpringApplication.run(SpringOrmApplication.class, args);
+    }
 
-//		User user = new User();
-//		user.setId(1);
-//		user.setName("kabbu Babu");
-//		user.setCity("Bangalore");
-//		user.setAge(3);
-//		User savedUser = userService.saveUser(user);
-//		System.out.println(savedUser);
-//		User updateUser = userService.updateUser(user, 2);
+    @Override
+    public void run(String... args) throws Exception {
 
-//		User user = userService.getUser(102);
-//		System.out.println("user is :"+user);
-//		logger.info("update use details are :{}",updateUser);
-//		userService.deleteUser(102);
-		Student student=new Student();
-		student.setStudentName("Kabeer Singh");
-		student.setStudentId(211);
-		student.setAbout("i am SB");
+//			ONE TO ONE MAPPING
 
-
-		Laptop laptop = new Laptop();
-		laptop.setModelNumber("del01");
-		laptop.setLaptopId(211);
-		laptop.setBrand("Dell");
-//		laptop.setStudent(student);
-		student.setLaptop(laptop);
-		Student saved = studentRepository.save(student);
-		System.out.println("saved :"+saved);
-	}
+//        Student student = new Student();
+//        student.setStudentName("rupa Singh");
+//        student.setAbout("i sister big");
+//        student.setStudentId(101);
+//
+//        Laptop laptop = new Laptop();
+//        laptop.setModelNumber("del0111");
+//        laptop.setLaptopId(21111);
+//        laptop.setBrand("Dell-21");
+//
+//        //important underline
+//        laptop.setStudent(student);
+//        student.setLaptop(laptop);
+//        Student saved = studentRepository.save(student);
+//        System.out.println("saved :" + saved);
+//        logger.info("saved user id is:{}", saved.getStudentId());
+        Optional<Student> student = studentRepository.findById(101);
+        if (student.isPresent()) {
+            logger.info("Student info: {}", student.get().getStudentName());
+        } else {
+            logger.info("Student with ID {} not found", 101);
+        }
+        logger.info("Student info :{}",student);
+    }
 }
