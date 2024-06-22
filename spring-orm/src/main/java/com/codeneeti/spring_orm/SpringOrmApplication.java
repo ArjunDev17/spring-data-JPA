@@ -1,8 +1,8 @@
 package com.codeneeti.spring_orm;
 
-import com.codeneeti.spring_orm.entities.Address;
-import com.codeneeti.spring_orm.entities.Laptop;
-import com.codeneeti.spring_orm.entities.Student;
+import com.codeneeti.spring_orm.entities.*;
+import com.codeneeti.spring_orm.repositories.CategoryRepo;
+import com.codeneeti.spring_orm.repositories.ProductRepo;
 import com.codeneeti.spring_orm.repositories.StudentRepository;
 import com.codeneeti.spring_orm.services.UserService;
 import org.slf4j.Logger;
@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -23,6 +24,10 @@ public class SpringOrmApplication implements CommandLineRunner {
     private StudentRepository studentRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProductRepo productRepo;
+    @Autowired
+    private CategoryRepo categoryRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringOrmApplication.class, args);
@@ -34,7 +39,10 @@ public class SpringOrmApplication implements CommandLineRunner {
 //        oneToOne();
 
         // One-to-Many mapping
-        oneToMany();
+//        oneToMany();
+        manyToMany();
+        Optional<Category> cid1 = categoryRepo.findById("cid1");
+        logger.info("cid1 data is :{}",cid1);
     }
 
     public void oneToOne() {
@@ -78,6 +86,41 @@ public class SpringOrmApplication implements CommandLineRunner {
 
         Student saved = studentRepository.save(student);
         logger.info("Saved student with addresses: {}", saved);
+    }
+    public void  manyToMany(){
+        Product product=new Product();
+        product.setPid("pid1");
+        product.setProductName("I phone");
+
+        Product product2=new Product();
+        product2.setPid("pid2");
+        product2.setProductName("I phone 2");
+
+        Product product3=new Product();
+        product3.setPid("pid3");
+        product3.setProductName("I phone 3");
+
+        Category category=new Category();
+        category.setCid("cid1");
+        category.setTitle("Electronics");
+
+        Category category2=new Category();
+        category2.setCid("cid2");
+        category2.setTitle("Electronics :2");
+
+        List<Product> categoryProductList = category.getProductList();
+        categoryProductList.add(product);
+        categoryProductList.add(product2);
+        categoryProductList.add(product3);
+
+        List<Product> category2ProductList = category2.getProductList();
+        category2ProductList.add(product);
+        category2ProductList.add(product2);
+
+        categoryRepo.save(category);
+        categoryRepo.save(category2);
+
+
     }
 }
 

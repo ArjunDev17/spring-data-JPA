@@ -1,0 +1,23 @@
+ @ManyToMany
+    List<Product>productList=new ArrayList<>();
+
+
+     @ManyToMany
+        List<Category>categoryList=new ArrayList<>();
+
+        product ki tarf se ek table bnn jayegi category ko manga ekrne ke liye
+        and category ki tarafse ek table bnn jayegi Product ko mannage krne ke liye
+
+       -----------------------------------------------------------------------------------------
+        @ManyToMany(mappedBy = "categoryList")
+           List<Product>productList=new ArrayList<>();
+
+           @ManyToMany
+                   List<Category>categoryList=new ArrayList<>();
+
+           but in this way no need to create table form both end
+
+           ejo product ke ander category hai usko represent krne ke liye database me ek
+
+
+           10:5
