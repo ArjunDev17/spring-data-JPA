@@ -35,14 +35,15 @@ public class SpringOrmApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // One-to-One mapping
+        //      One-to-One mapping
 //        oneToOne();
 
         // One-to-Many mapping
 //        oneToMany();
-        manyToMany();
-        Optional<Category> cid1 = categoryRepo.findById("cid1");
-        logger.info("cid1 data is :{}",cid1);
+//        manyToMany();
+//        Optional<Category> cid1 = categoryRepo.findById("cid1");
+//        logger.info("cid1 data is :{}",cid1);
+        customeMethod();
     }
 
     public void oneToOne() {
@@ -87,24 +88,25 @@ public class SpringOrmApplication implements CommandLineRunner {
         Student saved = studentRepository.save(student);
         logger.info("Saved student with addresses: {}", saved);
     }
-    public void  manyToMany(){
-        Product product=new Product();
+
+    public void manyToMany() {
+        Product product = new Product();
         product.setPid("pid1");
         product.setProductName("I phone");
 
-        Product product2=new Product();
+        Product product2 = new Product();
         product2.setPid("pid2");
         product2.setProductName("I phone 2");
 
-        Product product3=new Product();
+        Product product3 = new Product();
         product3.setPid("pid3");
         product3.setProductName("I phone 3");
 
-        Category category=new Category();
+        Category category = new Category();
         category.setCid("cid1");
         category.setTitle("Electronics");
 
-        Category category2=new Category();
+        Category category2 = new Category();
         category2.setCid("cid2");
         category2.setTitle("Electronics :2");
 
@@ -119,6 +121,22 @@ public class SpringOrmApplication implements CommandLineRunner {
 
         categoryRepo.save(category);
         categoryRepo.save(category2);
+
+
+    }
+
+    public void customeMethod() {
+        System.out.println("called +++++++++++++++++");
+        Optional<Product> byProductName = productRepo.findByProductName("I phone");
+        System.out.println("Output :" + byProductName.isPresent());
+        System.out.println("Output :" + byProductName.get().getProductName());
+
+        System.out.println("called +++++++++++++++++");
+
+        List<Product> byProductNameEndingWith = productRepo.findByProductNameEndingWith("one");
+        byProductNameEndingWith.forEach(product -> {
+            System.out.println("Product name :" + product.getProductName());
+        });
 
 
     }

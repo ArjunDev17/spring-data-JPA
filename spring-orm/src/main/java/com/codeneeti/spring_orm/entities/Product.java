@@ -8,11 +8,31 @@ import java.util.ArrayList;
 import java.util.List;
 @Entity
 public class Product {
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Id
     private String pid;
     private String productName;
+    private boolean active;
+    private double price;
+
     @ManyToMany(mappedBy = "productList")
     List<Category>categoryList=new ArrayList<>();
+
     public Product() {
     }
 
